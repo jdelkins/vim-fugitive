@@ -1840,7 +1840,10 @@ function! s:ReplaceCmd(cmd,...) abort
   endtry
   silent exe 'keepalt file '.tmp
   silent edit!
-  silent exe 'keepalt file '.s:fnameescape(fn)
+  try
+    silent exe 'keepalt file '.s:fnameescape(fn)
+  catch /E302/
+  endtry
   call delete(tmp)
   if bufname('$') == tmp
     silent execute 'bwipeout '.bufnr('$')
